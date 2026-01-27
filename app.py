@@ -68,7 +68,8 @@ def draw_life_calendar(
     title_bbox = draw.textbbox((0, 0), title_text, font=title_font)
     title_w = title_bbox[2] - title_bbox[0]
     title_h = title_bbox[3] - title_bbox[1]
-    title_y = int(height * 0.38)
+    # 원형 그리드와 조금 더 붙어 보이도록 제목을 살짝 아래로 내림 (크기는 그대로)
+    title_y = int(height * 0.42)
     draw.text(
         ((width - title_w) // 2, title_y),
         title_text,
@@ -106,7 +107,8 @@ def draw_life_calendar(
 
     # 제목 아래에 일정 간격을 두고 그리드 배치
     grid_top = title_y + title_h + int(height * 0.06)
-    grid_bottom = int(height * 0.58)
+    # 제목을 아래로 내리면서 줄어든 그리드 높이를 보정하기 위해 하단도 조금 내려 동그라미 크기를 유지
+    grid_bottom = int(height * 0.62)
     grid_height = max(1, grid_bottom - grid_top)
     grid_width = int(width * 0.8)
 
@@ -174,8 +176,8 @@ def draw_life_calendar(
 
     days_bbox = draw.textbbox((0, 0), days_left_text, font=info_font)
     days_w = days_bbox[2] - days_bbox[0]
-    # 하단 텍스트의 기준 Y (조금 위쪽)
-    info_y = int(height * 0.73)
+    # 하단 텍스트의 기준 Y (조금 위쪽) - D-day들과 함께 조금 더 위로 올림
+    info_y = int(height * 0.70)
 
     sep = " · "
     sep_bbox = draw.textbbox((0, 0), sep, font=info_font)
@@ -207,6 +209,7 @@ def draw_life_calendar(
 
         total_dday_height -= line_spacing  # 마지막 줄 이후 여백 제거
         # D-day 블록이 info_y 기준으로 살짝 위에 위치하도록 시작 위치 계산
+        # 아래 한 줄짜리와의 간격을 더 줄이기 위해 여백 값을 조금 더 줄임
         dday_start_y = info_y - total_dday_height - int(height * 0.015)
 
         current_y = dday_start_y
