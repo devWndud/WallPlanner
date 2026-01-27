@@ -1,4 +1,5 @@
 from datetime import datetime, date, timedelta
+from zoneinfo import ZoneInfo
 from io import BytesIO
 import math
 import os
@@ -78,7 +79,8 @@ def draw_life_calendar(
     )
 
     # D-day summary text (multiple events) - content만 계산, 실제 위치는 하단 근처에서 그림
-    today = date.today()
+    # 한국(서울) 기준 오늘 날짜 사용
+    today = datetime.now(ZoneInfo("Asia/Seoul")).date()
     dday_font = get_font(size=int(height * 0.02))
 
     parsed_ddays: list[tuple[date, str]] = []
